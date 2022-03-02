@@ -6,54 +6,18 @@ import os
 import shutil
 import random
 
-from random_select import copyFile
+from random_select_gui import random_select
 
 def show_window():
     user = user_entry.get()
     date = date_entry.get()
-    random_select(user, date)
-    time.sleep(3)
-    mgb.showinfo(title = 'Done',
-                 message = 'Successfully Done!')
-
-def is_inp(name):
-    return(name[-4:] in ['.jpg','.JPG', '.jpeg', '.JPEG', '.png', '.PNG'])
-
-
-def copyFile(fileDir, tarDir, select_num=150):
-	pathDir = os.listdir(fileDir)
-	sample = random.sample(pathDir, select_num)
-	print(sample)
-	for name in sample:
-	   shutil.copyfile(fileDir+name, tarDir+name)
-
-def random_select(user, date):
-    user = user
-    date = date
-    fileDir = '/home/kenchang/projects/activesample_experiment/gui/' + user + '/' + date + '/FN_night/'
-    outputDir = './'
-    userDir = outputDir + user
-    tarDir = userDir + '/' + date + '_select' + '/'
-    create_dir = True
-    select_num = 150
-    if create_dir == True:
-        print('tar', tarDir)
-        if os.path.isdir(outputDir):
-            pass
-        else:
-            os.mkdir(outputDir)
-        if os.path.isdir(userDir):
-            pass
-        else:
-            os.mkdir(userDir)
-        if os.path.isdir(tarDir):
-            pass
-        else:
-            os.mkdir(tarDir)
-    
-    copyFile(fileDir, tarDir, select_num)
-    print('done')
-    print('random', user, date)
+    if random_select(user, date):
+        time.sleep(2)
+        mgb.showinfo(title = 'Done',
+                    message = 'Successfully Done!')
+    else:
+        mgb.showinfo(title = 'Error',
+                    message = 'Check!')
 
 
 if __name__ == "__main__":
